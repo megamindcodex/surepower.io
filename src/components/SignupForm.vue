@@ -57,6 +57,9 @@ import router from "@/router";
 import { ref, reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength, alpha } from "@vuelidate/validators";
+import { endpoint } from "../constant/endpoint";
+
+// console.log(endpoint);
 
 const loading = ref(false);
 const formData = reactive({
@@ -95,7 +98,7 @@ const registerUser = async () => {
     loading.value = true;
     serverErr.value = null;
     // console.log(`data to be sent ${JSON.stringify(formData)}`);
-    const res = await axios.post("http://localhost:5000/api/signup", formData);
+    const res = await axios.post(`${endpoint}/api/signup`, formData);
 
     if (res.status === 201) {
       saveToLocalStorage(res);

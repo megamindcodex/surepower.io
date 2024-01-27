@@ -64,6 +64,7 @@ import axios from "axios";
 import { ref } from "vue";
 import { useCartStore } from "../store/cart";
 import { useLocalStorageStore } from "../store/localStorage";
+import { endpoint } from "../constant/endpoint";
 
 const cartStore = useCartStore();
 const localStorageStore = useLocalStorageStore();
@@ -78,10 +79,9 @@ const loading = ref(false);
 const checkOut = async () => {
   try {
     loading.value = true;
-    const res = await axios.post(
-      "http://localhost:5000/api/create-checkout-session",
-      { userId: userId.value }
-    );
+    const res = await axios.post(`${endpoint}/api/create-checkout-session`, {
+      userId: userId.value,
+    });
 
     if (res.status === 200) {
       window.location.href = res.data.url;

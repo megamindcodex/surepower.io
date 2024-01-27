@@ -73,6 +73,7 @@ import { onMounted, ref } from "vue";
 import { useLocalStorageStore } from "../store/localStorage";
 import { useCartStore } from "../store/cart";
 import router from "@/router";
+import { endpoint } from "@/constant/endpoint";
 const route = useRoute();
 const cartStore = useCartStore();
 const localStorageStore = useLocalStorageStore();
@@ -90,7 +91,7 @@ const isLoading = ref(false);
 const getProductItem = async () => {
   try {
     const res = await axios.get(
-      `http://localhost:5000/api/deployedProductDetail/${productId.value}`
+      `${endpoint}/api/deployedProductDetail/${productId.value}`
     );
 
     if (res.status === 200) {
@@ -114,7 +115,7 @@ const addToCart = async (productId) => {
       router.push("/login");
       return;
     }
-    const res = await axios.post("http://localhost:5000/api/addToCart", {
+    const res = await axios.post(`${endpoint}/api/addToCart`, {
       userId: userId.value,
       productData: productData,
     });
@@ -133,7 +134,7 @@ const addToCart = async (productId) => {
 const checkItemInCart = async () => {
   try {
     // console.log(userId.value, productId);
-    const res = await axios.get("http://localhost:5000/api/checkItemInCart", {
+    const res = await axios.get(`${endpoint}/api/checkItemInCart`, {
       params: { userId: userId.value, productId: productId.value },
     });
 
@@ -153,10 +154,10 @@ const checkItemInCart = async () => {
 const incrementProductQuantity = async () => {
   try {
     isLoading.value = true;
-    const res = await axios.post(
-      "http://localhost:5000/api/addProductQuantity",
-      { userId: userId.value, productId: productId.value }
-    );
+    const res = await axios.post(`${endpoint}/api/addProductQuantity`, {
+      userId: userId.value,
+      productId: productId.value,
+    });
 
     if (res.status === 200) {
       productQuantity.value = res.data;
@@ -172,10 +173,10 @@ const decrementProductQuantity = async () => {
   } else {
     try {
       isLoading.value = true;
-      const res = await axios.post(
-        "http://localhost:5000/api/reduceProductQuantity",
-        { userId: userId.value, productId: productId.value }
-      );
+      const res = await axios.post(`${endpoint}/api/reduceProductQuantity`, {
+        userId: userId.value,
+        productId: productId.value,
+      });
 
       if (res.status === 200) {
         productQuantity.value = res.data;
@@ -189,12 +190,9 @@ const decrementProductQuantity = async () => {
 
 const getProductQuantity = async () => {
   try {
-    const res = await axios.get(
-      "http://localhost:5000/api/getProductQuantity",
-      {
-        params: { userId: userId.value, productId: productId.value },
-      }
-    );
+    const res = await axios.get(`${endpoint}/api/getProductQuantity`, {
+      params: { userId: userId.value, productId: productId.value },
+    });
 
     if (res.status === 200) {
       productQuantity.value = res.data;

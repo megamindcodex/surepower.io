@@ -56,6 +56,7 @@ import axios from "axios";
 import { ref, reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
+import { endpoint } from "../constant/endpoint";
 
 const formData = reactive({
   email: "",
@@ -99,10 +100,7 @@ const loginUser = async () => {
   console.log(formData);
   try {
     loading.value = true;
-    const res = await axios.post(
-      "http://localhost:5000/api/loginUser",
-      formData
-    );
+    const res = await axios.post(`${endpoint}/api/loginUser`, formData);
     if (res.status === 200) {
       loading.value = false;
       saveToLocalStorage(res);

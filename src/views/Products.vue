@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import Landingsection from "../components/Landsection.vue";
+// import Landingsection from "../components/Landsection.vue";
 import { ref } from "vue";
 import { useProductsStore } from "../store/productStore";
 

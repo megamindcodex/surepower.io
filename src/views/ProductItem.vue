@@ -73,7 +73,7 @@ import { onMounted, ref } from "vue";
 import { useLocalStorageStore } from "../store/localStorage";
 import { useCartStore } from "../store/cart";
 import router from "@/router";
-import { endpoint } from "@/constant/endpoint";
+import { endpoint } from "../constant/endpoint";
 const route = useRoute();
 const cartStore = useCartStore();
 const localStorageStore = useLocalStorageStore();

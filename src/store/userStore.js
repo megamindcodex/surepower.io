@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { ref } from "vue";
-import { endpoint } from "@/constant/endpoint";
+import { endpoint } from "../constant/endpoint";
 
 export const useUserStore = defineStore("userStore", {
   state: () => ({

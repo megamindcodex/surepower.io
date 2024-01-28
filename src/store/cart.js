@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { ref } from "vue";
-import { endpoint } from "@/constant/endpoint";
+import { endpoint } from "../constant/endpoint";
 
 export const useCartStore = defineStore("cartStore", {
   state: () => ({
@@ -33,8 +33,8 @@ export const useCartStore = defineStore("cartStore", {
         });
         console.log(productId);
         if (res.status === 200) {
-          // this.getCartItems(userId);
-          // this.getTotalPrice(this.userId);
+          this.getCartItems(userId);
+          this.getTotalPrice(this.userId);
         }
       } catch (err) {
         console.error("Failed to delete cart item:", err.message);

@@ -15,7 +15,7 @@ export const useProductsStore = defineStore("productStore", {
     async getAllProducts() {
       try {
         this.loading = true;
-        const res = await axios.get(`${endpoint}/api/products`);
+        const res = await axios.get(`${endpoint}/api/productsDeployed`);
         if (res.status === 200) {
           const data = res.data;
           this.products = data;

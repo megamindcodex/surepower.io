@@ -33,7 +33,7 @@ export const useCartStore = defineStore("cartStore", {
         });
         console.log(productId);
         if (res.status === 200) {
-          this.getCartItems(userId);
+          // this.getCartItems(userId);
           // this.getTotalPrice(this.userId);
         }
       } catch (err) {

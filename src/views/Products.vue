@@ -24,7 +24,7 @@
           <div class="bg-black">
             <v-card-title class="text-wrap">{{ product.name }}</v-card-title>
             <v-card-subtitle class="text-white"
-              >${{ product.price }}</v-card-subtitle
+              >${{ product.price }} {{ product._id }}</v-card-subtitle
             >
             <v-card-actions class="d-flex justify-center full-width pa-1">
               <RouterLink

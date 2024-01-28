@@ -125,7 +125,7 @@ const addToCart = async (productId) => {
       isLoading.value = false;
       checkItemInCart();
       cartStore.getCartItems(userId.value);
-      // console.log("Product added to cart successfully", res.data);
+      console.log("Product added to cart successfully", res.data);
     }
   } catch (err) {
     console.log("Failed to add product to cart:", err.message);

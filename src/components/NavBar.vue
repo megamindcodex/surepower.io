@@ -78,7 +78,7 @@ watch(
 watchEffect(() => {
   isLoggedIn.value = localStorageStore.isLoggedIn;
   // console.log(isLoggedIn.value)
-  // cartStore.getCartItems(localStorageStore.userId);
+  cartStore.getCartItems(localStorageStore.userId);
 });
 </script>
 

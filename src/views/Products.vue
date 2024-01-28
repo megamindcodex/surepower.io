@@ -26,7 +26,6 @@
             <v-card-subtitle class="text-white"
               >${{ product.price }}</v-card-subtitle
             >
-            <span>{{ product._id }}</span>
             <v-card-actions class="d-flex justify-center full-width pa-1">
               <RouterLink
                 :to="'/productitem/' + product._id"

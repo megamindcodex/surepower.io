@@ -84,9 +84,10 @@ const checkOut = async () => {
     });
 
     if (res.status === 200) {
+      loading.value = false;
       window.location.href = res.data.url;
       // console.log("Checkout successful", res.data);
-      console.log(res.data.url);
+      // console.log(res.data.url);
     } else {
       console.log("Error running checkout. Status code: ", res.status);
     }

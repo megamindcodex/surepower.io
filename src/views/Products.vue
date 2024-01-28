@@ -47,7 +47,7 @@
 
 <script setup>
 // import Landingsection from "../components/Landsection.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useProductsStore } from "../store/productStore";
 
 const seeProductBtnClass = ref(
@@ -56,9 +56,7 @@ const seeProductBtnClass = ref(
 
 const productStore = useProductsStore();
 
-onMounted = () => {
-  productStore.getAllProducts();
-};
+productStore.getAllProducts();
 </script>
 
 <style scoped>

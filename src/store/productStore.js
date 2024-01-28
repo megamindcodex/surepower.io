@@ -19,6 +19,7 @@ export const useProductsStore = defineStore("productStore", {
         if (res.status === 200) {
           const data = res.data;
           this.products = data;
+          console.log(data);
         }
         this.loading = false;
       } catch (err) {

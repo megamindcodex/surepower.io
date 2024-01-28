@@ -87,6 +87,7 @@ const addToCartBtnClass = ref(
 );
 const productQuantity = ref(1);
 const isLoading = ref(false);
+console.log(productId.value);
 
 const getProductItem = async () => {
   try {

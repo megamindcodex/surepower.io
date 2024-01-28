@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { ref } from "vue";
-import { endpoint } from "@/constant/endpoint";
+import { endpoint } from "../constant/endpoint";
 
 export const useProductsStore = defineStore("productStore", {
   state: () => ({
@@ -15,7 +15,9 @@ export const useProductsStore = defineStore("productStore", {
     async getAllProducts() {
       try {
         this.loading = true;
-        const res = await axios.get(`${endpoint}/api/productsDeployed`);
+        const res = await axios.get(
+          `https://sparrow-spacesuit.cyclic.app/api/productsDeployed`
+        );
         if (res.status === 200) {
           const data = res.data;
           this.products = data;

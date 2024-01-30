@@ -34,6 +34,7 @@ export const useCartStore = defineStore("cartStore", {
         console.log(productId);
         if (res.status === 200) {
           this.getCartItems(userId);
+          // this.getTotalPrice(this.userId);
         }
       } catch (err) {
         console.error("Failed to delete cart item:", err.message);

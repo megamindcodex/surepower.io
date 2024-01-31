@@ -1,9 +1,10 @@
 <template>
-  <div class="d-flex align-center flex-column mt-16" style="height: 100dvh">
-    <div
-      class="d-flex flex-column justify-center align-center ga-4"
-      v-if="cartStore.cartItems"
-    >
+  <div
+    class="cont d-flex align-center ma-auto justify-center"
+    style="height: 100dvh"
+  >
+    <!-- class="center d-flex flex-column justify-center align-center ga-4 pa-4" -->
+    <div class="center" v-if="cartStore.cartItems">
       <v-card
         class="d-flex ga-4 pa-0 rounded custom-border"
         width="100%"
@@ -23,7 +24,7 @@
           <v-img
             :src="product.productImageURL"
             :alt="product.name"
-            width="244px"
+            width="200px"
             :aspect-ratio="2 / 1"
             contain
           />
@@ -103,13 +104,24 @@ const checkOut = async () => {
   padding: 0;
   margin: 0;
 }
+
 /* .cont {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100dvh;
 } */
+
+.center {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem;
+}
 
 /* .cartCont {
   display: flex;

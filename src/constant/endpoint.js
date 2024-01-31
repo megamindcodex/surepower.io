@@ -1,2 +1,2 @@
 //cyclic url endpoint
-export const endpoint = "https://vast-cyan-walrus-cape.cyclic.app";
+export const endpoint = "https://cute-lime-cocoon-hat.cyclic.app";

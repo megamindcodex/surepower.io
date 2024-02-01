@@ -1,38 +1,69 @@
 <template>
-  <div class="nav d-flex justify-center align-center bg-black mb-10 ga-4 pa-2">
-    <span
-      :class="{ active: isRouterActive('home') }"
-      class="nav-item pa-3 text-decoration-none"
-      @click="navigateTo('home')"
-      >Home
-    </span>
-    <span
-      :class="{ active: isRouterActive('products') }"
-      class="nav-item pa-3 text-decoration-none"
-      @click="navigateTo('products')"
-      >All Products</span
-    >
-    <span
-      :class="{ active: isRouterActive('cart') }"
-      class="nav-item mx-2 pt-4"
-      @click="navigateTo('cart')"
-      v-if="isLoggedIn"
-    >
-      <v-badge :content="cartStore.cartLength">
-        <span class="material-symbols-outlined cart-icon">shopping_cart</span>
-      </v-badge>
-    </span>
-    <span
-      class="nav-item mx-2 pt-4"
-      :class="{ active: isRouterActive('userProfile') }"
-      @click="navigateTo('userProfile')"
-      v-if="isLoggedIn"
-      ><span class="material-symbols-outlined">account_circle</span></span
-    >
-    <span @click="navigateTo('login')" class="nav-item pa-3" v-if="!isLoggedIn">
-      Login
-    </span>
+  <div class="header pa-1">
+    <div class="menu">
+      <span
+        class="material-symbols-outlined pa-2"
+        @click.stop="drawer = !drawer"
+        >menu</span
+      >
+    </div>
+    <Logo />
+    <div class="nav mx-8" v-if="display">
+      <span
+        :class="{ active: isRouterActive('home') }"
+        class="nav-item pa-4 text-decoration-none"
+        @click="navigateTo('home')"
+        >Home
+      </span>
+      <span
+        :class="{ active: isRouterActive('products') }"
+        class="nav-item pa-3 text-decoration-none"
+        @click="navigateTo('products')"
+        >Shop</span
+      >
+      <span
+        class="nav-item mx-2 pt-4"
+        :class="{ active: isRouterActive('userProfile') }"
+        @click="navigateTo('userProfile')"
+        v-if="isLoggedIn"
+        ><span class="material-symbols-outlined">account_circle</span></span
+      >
+      <!-- <span
+        @click="navigateTo('login')"
+        class="nav-item pa-3"
+        v-if="!isLoggedIn"
+      >
+        Login
+      </span> -->
+    </div>
+    <div class="cartCont d-flex justify-end align-center mr-4">
+      <span
+        :class="{ active: isRouterActive('cart') }"
+        class="nav-item mx-2 pt-4"
+        @click="navigateTo('cart')"
+        v-if="isLoggedIn"
+      >
+        <v-badge :content="cartStore.cartLength">
+          <span class="material-symbols-outlined cart-icon">shopping_cart</span>
+        </v-badge>
+      </span>
+      <span
+        @click="navigateTo('login')"
+        :class="{ active: isRouterActive('login') }"
+        v-if="!isLoggedIn"
+      >
+        Login
+      </span>
+    </div>
   </div>
+  <v-navigation-drawer v-model="drawer" location="top" temporary class="drawer">
+    <div class="close">
+      <span class="material-symbols-outlined pa-2" @click="drawer = !drawer">
+        close
+      </span>
+    </div>
+    <Dropdownpanel />
+  </v-navigation-drawer>
 </template>
 
 <script setup>
@@ -40,6 +71,8 @@ import { ref, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCartStore } from "../store/cart";
 import { useLocalStorageStore } from "../store/localStorage";
+import Logo from "./Logo.vue";
+import Dropdownpanel from "./Dropdownpanel.vue";
 
 const cartStore = useCartStore();
 const localStorageStore = useLocalStorageStore();
@@ -49,6 +82,9 @@ const isLoggedIn = ref(false);
 const currentRoute = ref(null);
 const route = useRoute();
 const router = useRouter();
+
+const display = ref(true);
+const drawer = ref(false);
 
 const isRouterActive = (routeName) => {
   return currentRoute.value === routeName;
@@ -89,10 +125,34 @@ watchEffect(() => {
   padding: 0;
 }
 
-.nav {
-  position: fixed;
+.header {
+  position: relative;
+  display: flex;
   width: 100%;
+  justify-content: space-between;
+  align-content: center;
   z-index: 999;
+}
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.close {
+  position: sticky;
+  top: 0px;
+  z-index: 200;
+  width: 20px;
+}
+
+.close span {
+  font-weight: bold;
+}
+.nav {
+  display: none;
 }
 .nav-item {
   position: relative;
@@ -141,5 +201,43 @@ watchEffect(() => {
   height: 2px;
   background-color: red;
   transition: 0.3s;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.menu span {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 600px) {
+  .header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+    z-index: 999;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .drawer {
+    display: none;
+  }
+  /* .login-link {
+    display: none;
+  } */
 }
 </style>

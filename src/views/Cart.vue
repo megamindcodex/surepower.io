@@ -7,7 +7,6 @@
     <div class="center" v-if="cartStore.cartItems">
       <v-card
         class="d-flex ga-4 pa-0 rounded custom-border"
-        width="100%"
         v-for="product in cartStore.cartItems"
         :key="product._id"
       >
@@ -30,7 +29,7 @@
           />
         </div>
         <div class="d-flex flex-column justify-center">
-          <p>{{ product.name }}</p>
+          <v-card-title>{{ product.name }}</v-card-title>
           <p>${{ product.price }}</p>
           <p class="font-weight-bold">{{ product.quantity }}</p>
         </div>

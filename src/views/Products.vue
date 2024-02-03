@@ -1,47 +1,48 @@
 <template>
-  <div id="products" class="d-flex justify-center align-center mx-10 pt-16">
+  <v-container
+    class="container d-flex justify-center align-center"
+    max-width="700px"
+  >
     <div class="loading" v-if="productStore.loading">
       <v-progress-circular indeterminate color="#00796B" :size="200">
         Loading....
       </v-progress-circular>
     </div>
     <div class="productCont" v-if="productStore.products">
-      <div
-        class="product"
+      <RouterLink
+        :to="'/productitem/' + product._id"
+        class="products"
         v-for="product in productStore.products"
         :key="product._id"
       >
-        <v-card class="border-md elevation-8" width="100%">
-          <div class="image d-flex justify-center align-center">
-            <v-img
-              :src="product.productImageURL"
-              :alt="product.name"
-              width="300px"
-              :aspect-ratio="4 / 2"
-              contain
-            />
+        <div class="product-card">
+          <div class="image bg-white">
+            <v-img :src="product.productImageURL" :alt="product.name" />
           </div>
-          <div class="bg-black">
-            <v-card-title class="text-wrap">{{ product.name }}</v-card-title>
-            <v-card-subtitle class="text-white"
-              >${{ product.price }}</v-card-subtitle
+          <div class="desc mt-4 pa-4">
+            <v-card-title class="text-subtitle-1 pa-0"
+              >${{ product.price }}</v-card-title
             >
-            <v-card-actions class="d-flex justify-center full-width pa-1">
+            <v-card-title class="text-overline font-weight-bold pa-0">{{
+              product.name
+            }}</v-card-title>
+            <!-- <div class="card-action">
               <RouterLink
                 :to="'/productitem/' + product._id"
                 :class="seeProductBtnClass"
                 v-ripple
                 >See product</RouterLink
               >
-            </v-card-actions>
+            </div> -->
           </div>
-        </v-card>
-      </div>
+        </div>
+      </RouterLink>
+      <!-- <v-responsive width="100%"></v-responsive> -->
     </div>
     <div class="productCont" v-else>
       <h3>No Products Found</h3>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script setup>
@@ -50,7 +51,7 @@ import { ref } from "vue";
 import { useProductsStore } from "../store/productStore";
 
 const seeProductBtnClass = ref(
-  "v-btn v-btn--block v-btn--variant-outlined rounded-0  pa-4"
+  "v-btn v-btn--block v-btn--variant-outlined pa-4"
 );
 
 const productStore = useProductsStore();
@@ -59,38 +60,68 @@ productStore.getAllProducts();
 </script>
 
 <style scoped>
+/* .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+} */
+
 .productCont {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
   justify-content: center;
-  width: 80%;
+  align-items: center;
+  width: 100%;
+  max-width: 1228px;
+  flex-grow: 1;
 }
 
-.product {
+.products {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* border: 1px solid #ccc;  */
+  text-decoration: none;
+  /* color: #ffff; */
+  color: #000;
+  /* color: #01837b; */
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  border-radius: 4px;
+  border: 2px solid #c2c2c2;
+  /* background-color: #364958; */
+  background-color: #f39098;
 }
 
 .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   overflow: hidden;
+  aspect-ratio: 9/6;
+  /* object-fit: contain; */
+  border-radius: 4px 4px 0 0;
 }
 
 .image img {
   width: 100%;
-  aspect-ratio: 2/1;
-  object-fit: contain;
+  /* object-fit: contain; */
 }
 
 .desc {
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  box-sizing: border-box;
+  /* padding: 10px; */
+  /* box-sizing: border-box; */
+  /* max-width: auto-fit; */
 }
 
 .productCont h3 {
@@ -101,13 +132,14 @@ productStore.getAllProducts();
   margin: 0;
 }
 
-.addToCartBtn {
+/* .card-action {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   margin-top: 1rem;
-}
+  border-radius: 10px;
+} */
 
 .loading {
   position: absolute;
@@ -117,6 +149,7 @@ productStore.getAllProducts();
   align-items: center;
   width: 100%;
 }
+
 /* .addToCartBtn a {
   text-decoration: none;
   color: black;
@@ -129,8 +162,9 @@ productStore.getAllProducts();
   background: transparent;
   cursor: pointer;
   transition: 0.3s;
-}
+} */
 
+/* 
 .addToCartBtn a:hover {
   color: white;
   transition: 0.3s;
@@ -145,5 +179,16 @@ productStore.getAllProducts();
 .cartIcon svg {
   width: 24px;
   height: auto;
+} */
+
+/* @media screen and (min-width: 1228px) {
+  .productCont {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 } */
 </style>

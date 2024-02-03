@@ -83,11 +83,11 @@ watchEffect(() => {
   position: relative;
   display: flex;
   flex-direction: column;
-  row-gap: 0.8rem;
+  row-gap: 0.4rem;
   /* justify-content: center; */
   /* align-items: center; */
   width: 100%;
-  /* margin-top: 1rem; */
+  margin-bottom: 2rem;
 }
 
 .sm-nav span {

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="bg-grey-darken-4">
+  <v-app class="bg-base">
     <div class="mb-16">
       <NavBar />
       <RouterView />
@@ -20,12 +20,16 @@ import NavBar from "./components/NavBar.vue";
   box-sizing: border-box;
 }
 
+.bg-base {
+  background-color: #f7f9f9;
+}
+
 .logo {
   display: block;
   margin: 0 auto 2rem;
 }
 
-nav {
+/* nav {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +38,7 @@ nav {
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
-}
+} */
 
 nav a.router-link-exact-active {
   color: var(--color-text);

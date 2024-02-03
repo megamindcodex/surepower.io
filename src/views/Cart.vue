@@ -1,10 +1,10 @@
 <template>
   <div
-    class="cont d-flex align-center ma-auto justify-center"
+    v-if="cartStore.cartItems"
+    class="cont d-flex align-center ma-auto justify-center flex-column"
     style="height: 100dvh"
   >
-    <!-- class="center d-flex flex-column justify-center align-center ga-4 pa-4" -->
-    <div class="center" v-if="cartStore.cartItems">
+    <div class="center">
       <v-card
         class="d-flex ga-4 pa-0 rounded custom-border"
         v-for="product in cartStore.cartItems"
@@ -52,11 +52,13 @@
         Checkout
       </v-btn>
     </div>
-    <div class="cont" v-show="!cartStore.cartItems.length">
-      <p>No item here</p>
-    </div>
-    <!-- <span>${{ subTotal }}</span> -->
   </div>
+  <!-- <div
+    v-if="!cartStore.cartItem >= 1"
+    class="cont d-flex flex-column justify-center align-center w-100 flex-grow-1"
+  >
+    <span class="text-h5 text-center font-weight-medium">No item here</span>
+  </div> -->
 </template>
 
 <script setup>

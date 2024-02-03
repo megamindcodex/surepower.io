@@ -1,9 +1,9 @@
 <template>
-  <div class="cont">
+  <RouterLink to="/" class="cont">
     <div class="image">
       <v-img class="v-imag w-100" alt="markTio, logo" :src="logoURL"></v-img>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <script setup>

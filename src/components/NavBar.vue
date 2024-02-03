@@ -1,5 +1,5 @@
 <template>
-  <div class="header pa-1">
+  <div :class="{ 'sticky-header': isSticky }" class="header pa-1">
     <div class="menu">
       <span
         class="material-symbols-outlined pa-2"
@@ -43,9 +43,16 @@
         @click="navigateTo('cart')"
         v-if="isLoggedIn"
       >
-        <v-badge :content="cartStore.cartLength">
-          <span class="material-symbols-outlined cart-icon">shopping_cart</span>
-        </v-badge>
+        <span class="material-symbols-outlined cart-icon"
+          >shopping_cart
+          <v-badge
+            v-if="cartStore.cartLength"
+            :content="cartStore.cartLength"
+            class="badge"
+            color="red-darken-1"
+          >
+          </v-badge>
+        </span>
       </span>
       <span
         @click="navigateTo('login')"
@@ -67,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref, watch, watchEffect } from "vue";
+import { onBeforeMount, onMounted, ref, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCartStore } from "../store/cart";
 import { useLocalStorageStore } from "../store/localStorage";
@@ -85,6 +92,7 @@ const router = useRouter();
 
 const display = ref(true);
 const drawer = ref(false);
+const isSticky = ref(false);
 
 const isRouterActive = (routeName) => {
   return currentRoute.value === routeName;
@@ -94,15 +102,6 @@ const navigateTo = (routeName) => {
   // scrollToSection(routeName);
   router.push({ name: routeName });
 };
-
-// const scrollToSection = (section) => {
-//   const element = document.getElementById(section);
-//   if (element) {
-//     element.scrollIntoView({ behavior: "smooth" });
-//   } else {
-//     router.push({ name: section });
-//   }
-// };
 
 watch(
   () => route.name,
@@ -115,6 +114,19 @@ watchEffect(() => {
   isLoggedIn.value = localStorageStore.isLoggedIn;
   // console.log(isLoggedIn.value)
   cartStore.getCartItems(localStorageStore.userId);
+});
+
+const handleScroll = () => {
+  // Adjust the threshold value based on when you want the navbar to become sticky
+  isSticky.value = window.scrollY < 300;
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onBeforeMount(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -132,6 +144,25 @@ watchEffect(() => {
   justify-content: space-between;
   align-content: center;
   z-index: 999;
+  border-bottom: 1px solid #c2c2c2;
+  transition: ease 1s;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-content: center;
+  z-index: 999;
+  transition: ease 1s;
+  /* border-bottom: 2px solid #c2c2c2; */
+  background-color: #00000013;
+}
+
+.is-top {
+  transform-origin: ease 1s;
 }
 
 .drawer {
@@ -211,6 +242,14 @@ watchEffect(() => {
 .menu span {
   font-size: 2rem;
   cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+}
+
+.cart-icon {
+  position: relative;
 }
 
 @media screen and (min-width: 600px) {

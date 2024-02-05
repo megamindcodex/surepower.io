@@ -7,7 +7,7 @@
         >menu</span
       >
     </div>
-    <Logo class="ml-10" />
+    <Logo />
     <div class="nav mx-8" v-if="display">
       <span
         :class="{ active: isRouterActive('home') }"

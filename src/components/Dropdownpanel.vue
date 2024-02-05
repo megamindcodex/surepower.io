@@ -20,7 +20,10 @@
       >
         cart
       </span>
-      <v-badge :content="cartStore.cartLength"></v-badge>
+      <v-badge
+        v-show="cartStore.cartLength"
+        :content="cartStore.cartLength"
+      ></v-badge>
     </div>
 
     <span

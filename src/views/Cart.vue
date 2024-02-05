@@ -1,10 +1,10 @@
 <template>
-  <div v-if="cartStore.cartItems" class="cont">
+  <div v-if="cartStore.cartLength" class="cont">
     <div class="cart-items">
       <div
         v-for="product in cartStore.cartItems"
         :key="product._id"
-        class="cart-item elevation-7"
+        class="cart-item elevation-4"
       >
         <span class="delBtn">
           <span
@@ -20,7 +20,7 @@
         </div>
         <div class="desc">
           <div class="body">
-            <h3>{{ product.name }}</h3>
+            <span class="text-subtitle-3">{{ product.name }}</span>
             <p>${{ product.price }}</p>
             <p class="font-weight-bold">{{ product.quantity }}</p>
           </div>
@@ -32,9 +32,9 @@
         </div>
       </div>
     </div>
-
+    <!-- Summary section -->
     <div class="summary-cont">
-      <v-table class="summary">
+      <v-table v-if="cartStore.cartLength" class="summary">
         <thead>
           <tr>
             <th class="text-left text-h6">Name</th>
@@ -68,6 +68,9 @@
       </v-btn>
     </div>
   </div>
+  <div class="cont" v-else>
+    <CartEmptyPanel />
+  </div>
   <!-- <div
     v-if="!cartStore.cartItem >= 1"
     class="cont d-flex flex-column justify-center align-center w-100 flex-grow-1"
@@ -82,6 +85,8 @@ import { ref } from "vue";
 import { useCartStore } from "../store/cart";
 import { useLocalStorageStore } from "../store/localStorage";
 import { endpoint } from "../constant/endpoint";
+
+import CartEmptyPanel from "../components/CartEmptyPanel.vue";
 
 const cartStore = useCartStore();
 const localStorageStore = useLocalStorageStore();
@@ -144,6 +149,7 @@ const checkOut = async () => {
 .cart-item {
   position: relative;
   display: flex;
+  column-gap: 0.4rem;
   padding: 0.5rem;
   background: #fff;
   border-radius: 10px;
@@ -153,7 +159,7 @@ const checkOut = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35%;
+  width: 23%;
   aspect-ratio: 1/1;
 }
 
@@ -163,9 +169,10 @@ const checkOut = async () => {
 }
 
 .desc {
+  position: relative;
   display: flex;
   /* flex-direction: column; */
-  justify-content: end;
+  justify-content: center;
   align-items: center;
   width: 100%;
   /* flex-basis: 300px; */
@@ -173,18 +180,21 @@ const checkOut = async () => {
 
 .body {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   /* align-items: center; */
   column-gap: 1rem;
   width: 100%;
-  flex-basis: 500px;
+  /* flex-basis: 500px; */
 }
 
 .link {
+  position: absolute;
+  bottom: -0.3rem;
+  right: -0.3rem;
   display: flex;
   justify-content: end;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
   align-self: end;
 }
 
@@ -194,9 +204,10 @@ const checkOut = async () => {
 
 .delBtn {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0.3rem;
+  right: 0.3rem;
   transition: 0.5s;
+  z-index: 200;
 }
 
 .delBtn span:hover {
@@ -221,7 +232,7 @@ const checkOut = async () => {
   width: 100%;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 700px) {
   .cont {
     position: relative;
     display: flex;

@@ -25,7 +25,7 @@ export const useCartStore = defineStore("cartStore", {
         if (res.status === 200) {
           this.cartItems = res.data;
           console.log(this.cartItems);
-          console.log(this.subTotal);
+          // console.log(this.subTotal);
         } else if (res.status === 204) {
           console.log("cart is empty", res.data);
         }

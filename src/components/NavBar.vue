@@ -7,7 +7,7 @@
         >menu</span
       >
     </div>
-    <Logo />
+    <Logo class="ml-10" />
     <div class="nav mx-8" v-if="display">
       <span
         :class="{ active: isRouterActive('home') }"
@@ -17,24 +17,10 @@
       </span>
       <span
         :class="{ active: isRouterActive('products') }"
-        class="nav-item pa-3 text-decoration-none"
+        class="nav-item pa-4 text-decoration-none"
         @click="navigateTo('products')"
         >Shop</span
       >
-      <span
-        class="nav-item mx-2 pt-4"
-        :class="{ active: isRouterActive('userProfile') }"
-        @click="navigateTo('userProfile')"
-        v-if="isLoggedIn"
-        ><span class="material-symbols-outlined">account_circle</span></span
-      >
-      <!-- <span
-        @click="navigateTo('login')"
-        class="nav-item pa-3"
-        v-if="!isLoggedIn"
-      >
-        Login
-      </span> -->
     </div>
     <div class="cartCont d-flex justify-end align-center mr-4">
       <span
@@ -55,8 +41,16 @@
         </span>
       </span>
       <span
-        @click="navigateTo('login')"
+        class="nav-item mx-2 pt-4 account-circle"
+        :class="{ active: isRouterActive('userProfile') }"
+        @click="navigateTo('userProfile')"
+        v-if="isLoggedIn"
+        ><span class="material-symbols-outlined">account_circle</span></span
+      >
+      <span
         :class="{ active: isRouterActive('login') }"
+        class="nav-item mx2 pa-4"
+        @click="navigateTo('login')"
         v-if="!isLoggedIn"
       >
         Login
@@ -209,8 +203,8 @@ onBeforeMount(() => {
   content: "";
   position: absolute;
   bottom: 0;
-  width: 80%;
   left: 10%;
+  width: 80%;
   height: 2px;
   background-color: red;
   color: red;
@@ -234,6 +228,9 @@ onBeforeMount(() => {
   transition: 0.3s;
 }
 
+.account-circle {
+  display: none;
+}
 .menu {
   display: flex;
   align-items: center;
@@ -262,10 +259,15 @@ onBeforeMount(() => {
   }
   .nav {
     display: flex;
-    justify-content: space-around;
+    column-gap: 0.5rem;
+    justify-content: center;
     align-items: center;
     width: 100%;
     max-width: 500px;
+  }
+
+  .account-circle {
+    display: block;
   }
 
   .menu {

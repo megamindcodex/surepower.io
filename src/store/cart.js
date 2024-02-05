@@ -9,6 +9,12 @@ export const useCartStore = defineStore("cartStore", {
   }),
   getters: {
     cartLength: (state) => state.cartItems.length,
+    subTotal: (state) =>
+      state.cartItems.reduce(
+        (accumulator, currentItem) =>
+          accumulator + currentItem.price * currentItem.quantity,
+        0
+      ),
   },
   actions: {
     async getCartItems(userId) {
@@ -19,6 +25,7 @@ export const useCartStore = defineStore("cartStore", {
         if (res.status === 200) {
           this.cartItems = res.data;
           console.log(this.cartItems);
+          console.log(this.subTotal);
         } else if (res.status === 204) {
           console.log("cart is empty", res.data);
         }

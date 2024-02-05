@@ -11,7 +11,7 @@
     <div class="productCont" v-if="productStore.products">
       <RouterLink
         :to="'/productitem/' + product._id"
-        class="products"
+        class="product"
         v-for="product in productStore.products"
         :key="product._id"
       >
@@ -78,7 +78,7 @@ productStore.getAllProducts();
   flex-grow: 1;
 }
 
-.products {
+.product {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,8 +96,8 @@ productStore.getAllProducts();
   width: 100%;
   border-radius: 4px;
   border: 2px solid #c2c2c2;
-  /* background-color: #364958; */
-  background-color: #f39098;
+  background-color: #e8e9eb;
+  /* background-color: #f39098; */
 }
 
 .image {

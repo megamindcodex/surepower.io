@@ -161,9 +161,9 @@ onBeforeMount(() => {
   background-color: #00000013;
 }
 
-.is-top {
-  transform-origin: ease 1s;
-}
+/* .is-top {
+  transition: ease 1s;
+} */
 
 .drawer {
   display: flex;

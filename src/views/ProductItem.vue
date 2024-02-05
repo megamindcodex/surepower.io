@@ -1,69 +1,74 @@
 <template>
-  <v-container class="d-flex justify-center">
-    <v-card
-      class="product border-md elevation-8"
-      width="100%"
-      max-width="400px"
-      v-if="product"
-    >
-      <div class="inCartBtn">
+  <div class="cont d-flex justify-center flex-grow-1" v-if="product">
+    <div class="product-card elevation-8 pa-2">
+      <!-- <div class="inCartBtn">
         <span v-if="isItemInCart">In cart</span>
-      </div>
+      </div> -->
       <div class="image">
-        <v-img
-          :src="product.productImageURL"
-          :alt="product.name"
-          aspect-ratio="1/1"
-          width="100%"
-        />
+        <v-img :src="product.productImageURL" :alt="product.name" />
       </div>
-      <div class="desc">
-        <h3>{{ product.name }}</h3>
-        <p>${{ product.price }} {{ product.quantity }}</p>
-      </div>
-      <div class="addToCartBtn pa-2" v-if="!isItemInCart">
-        <v-btn
-          @click="addToCart(product._id)"
-          :class="addToCartBtnClass"
-          :loading="isLoading"
-          :disabled="isLoading"
-          v-ripple
-          >Add to cart</v-btn
-        >
-      </div>
-      <div class="v-card-actions d-flex justify-center align-center" v-else>
-        <v-btn
-          rounded="0"
-          size="x-large"
-          density="comfortable"
-          :disabled="productQuantity === 1"
-          @click="decrementProductQuantity"
-          ><span class="material-symbols-outlined"> remove </span></v-btn
-        >
-
-        <div class="loading" v-show="isLoading">
-          <v-progress-circular
-            class="ml-3 mr-1"
-            indeterminate
-            color="#00796B"
-            :size="30"
-          >
-          </v-progress-circular>
+      <div class="desc mt-10">
+        <div class="body">
+          <h3>{{ product.name }}</h3>
+          <p>${{ product.price }} {{ product.quantity }}</p>
+          <p class="discription">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium
+            nobis dolorum laborum iste quis aut. Sunt voluptatum cum, nesciunt
+            deserunt explicabo soluta dolor consectetur est ab voluptas impedit
+            esse numquam!
+          </p>
         </div>
-        <span class="quant mx-5" v-if="!isLoading">{{ productQuantity }}</span>
+        <div class="action">
+          <div class="addToCartBtn" v-if="!isItemInCart">
+            <v-btn
+              @click="addToCart(product._id)"
+              :class="addToCartBtnClass"
+              :loading="isLoading"
+              :disabled="isLoading"
+              v-ripple
+            >
+              Add to cart
+            </v-btn>
+          </div>
+          <div class="v-card-actions d-flex justify-center align-center" v-else>
+            <v-btn
+              variant="outlined"
+              icon="mdi-plus"
+              size="x-large"
+              density="comfortable"
+              :disabled="productQuantity === 1"
+              @click="decrementProductQuantity"
+              ><span class="material-symbols-outlined"> remove </span></v-btn
+            >
 
-        <v-btn
-          rounded="0"
-          size="x-large"
-          density="comfortable"
-          :disabled="productQuantity === 20"
-          @click="incrementProductQuantity"
-        >
-          <span class="material-symbols-outlined"> add </span>
-        </v-btn>
+            <div class="loading" v-show="isLoading">
+              <v-progress-circular
+                class="ml-3 mr-1"
+                indeterminate
+                color="#00796B"
+                :size="30"
+              >
+              </v-progress-circular>
+            </div>
+            <span class="quant mx-5" v-if="!isLoading">{{
+              productQuantity
+            }}</span>
+
+            <v-btn
+              variant="outlined"
+              icon="mdi-plus"
+              size="x-large"
+              density="comfortable"
+              :disabled="productQuantity === 20"
+              @click="incrementProductQuantity"
+            >
+              <span class="material-symbols-outlined"> add </span>
+            </v-btn>
+          </div>
+        </div>
       </div>
-    </v-card>
-  </v-container>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -83,7 +88,7 @@ const userId = ref(localStorageStore.userId);
 const productId = ref(route.params.id);
 // const addedToCart = ref(false);
 const addToCartBtnClass = ref(
-  " button v-btn v-btn--block v-btn--variant-outlined rounded-0 bg-black pa-7"
+  " button v-btn v-btn--block v-btn--variant-outlined text-black px-4 py-6"
 );
 const productQuantity = ref(1);
 const isLoading = ref(false);
@@ -215,37 +220,46 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* .cont {
+.cont {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-} */
-
-/* .product {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  border: 1px solid #ccc;
-} */
-
-.image {
-  width: 100%;
-  overflow: hidden;
-  /* Ensure images don't exceed their container */
+  /* height: 100dvh; */
+  padding: 1rem;
 }
 
-/* .image img {
+.product-card {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-} */
+  max-width: 390px;
+  background-color: #ffff;
+  border-radius: 8px;
+}
 
 .desc {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
-  padding: 10px;
-  box-sizing: border-box;
+  row-gap: 1rem;
+  width: 100%;
+  /* flex-basis: 50%; */
+  /* box-sizing: border-box; */
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* min-height: 300px; */
+  /* aspect-ratio: 8/4; */
+  /* Ensure images don't exceed their container */
+}
+
+.image img {
+  width: 100%;
+  object-fit: contain;
 }
 
 .productCont h3 {
@@ -258,18 +272,15 @@ onMounted(() => {
   /* Remove default margin for better alignment */
 }
 
-.product {
-  position: relative;
-}
-.btn {
+/* .btn {
   display: flex;
   justify-content: right;
   align-items: center;
   width: 100%;
   padding: 10px;
-}
+} */
 
-.btn button {
+/* .btn button {
   font-weight: bolder;
   font-size: 1rem;
   padding: 0.6rem 2rem;
@@ -277,26 +288,31 @@ onMounted(() => {
   border-radius: 3px;
   color: white;
   background-color: crimson;
-}
+} */
 
-.btn button:hover {
+/* .btn button:hover {
   background-color: rgb(194, 17, 53);
-}
+} */
 
 /* .addToCartBtn {
   background-color: black;
 } */
 
-.addToCartBtn button {
-  font-size: 1rem;
-  font-weight: 600;
+.action {
+  display: flex;
+  justify-content: end;
+  padding: 0;
+  width: 100%;
 }
 
-/* .addToCartBtn .button:hover {
-  color: white;
-  cursor: pointer;
-  background-color: green;
-} */
+.addToCartBtn {
+  width: 100%;
+}
+.addToCartBtn button {
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 23px;
+}
 
 .inCartBtn {
   display: flex;
@@ -316,5 +332,72 @@ onMounted(() => {
 .quant {
   position: relative;
   left: 4px;
+}
+
+@media (min-width: 600px) {
+  .cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+  }
+
+  .product-card {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1rem;
+    width: 100%;
+    /* height: 350px; */
+    max-width: 700px;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    /* color: white; */
+  }
+
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    /* flex-basis: 50%; */
+  }
+
+  .image img {
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .desc {
+    display: flex;
+    /* flex-direction: column; */
+    row-gap: 1rem;
+    width: 50%;
+    justify-content: center;
+    padding: 0.3rem;
+    flex-basis: 50%;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 20rem;
+    /* justify-self: center; */
+    /* justify-self: center; */
+  }
+  .action {
+    display: flex;
+    justify-content: end;
+    padding: 0;
+  }
+
+  .addToCartBtn {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+  }
 }
 </style>

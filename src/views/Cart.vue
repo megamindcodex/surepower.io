@@ -1,14 +1,10 @@
 <template>
-  <div
-    v-if="cartStore.cartItems"
-    class="cont d-flex align-center ma-auto justify-center flex-column"
-    style="height: 100dvh"
-  >
-    <div class="center">
-      <v-card
-        class="d-flex ga-4 pa-0 rounded custom-border"
+  <div v-if="cartStore.cartItems" class="cont">
+    <div class="cart-items">
+      <div
         v-for="product in cartStore.cartItems"
         :key="product._id"
+        class="cart-item elevation-7"
       >
         <span class="delBtn">
           <span
@@ -20,27 +16,46 @@
           >
         </span>
         <div class="image">
-          <v-img
-            :src="product.productImageURL"
-            :alt="product.name"
-            width="200px"
-            :aspect-ratio="2 / 1"
-            contain
-          />
+          <img :src="product.productImageURL" :alt="product.name" />
         </div>
-        <div class="d-flex flex-column justify-center">
-          <v-card-title>{{ product.name }}</v-card-title>
-          <p>${{ product.price }}</p>
-          <p class="font-weight-bold">{{ product.quantity }}</p>
+        <div class="desc">
+          <div class="body">
+            <h3>{{ product.name }}</h3>
+            <p>${{ product.price }}</p>
+            <p class="font-weight-bold">{{ product.quantity }}</p>
+          </div>
+          <div class="link">
+            <RouterLink :to="'/productitem/' + product._id">
+              <span class="material-symbols-outlined"> open_in_new </span>
+            </RouterLink>
+          </div>
         </div>
-        <div class="d-flex align-end flex-grow-1 justify-end">
-          <RouterLink
-            :to="'/productitem/' + product._id"
-            class="text-decoration-none py-2 px-4 font-weight-bold bg-white"
-            >details</RouterLink
-          >
-        </div>
-      </v-card>
+      </div>
+    </div>
+
+    <div class="summary-cont">
+      <v-table class="summary">
+        <thead>
+          <tr>
+            <th class="text-left text-h6">Name</th>
+            <th class="text-left text-h6">Price</th>
+            <th class="text-left text-h6">Quanity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in cartStore.cartItems" :key="product.name">
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.quantity }}</td>
+          </tr>
+          <div class="d-flex flex-column pa-4 mt-8">
+            <span class="text-h6 font-weight-bold">Total:</span>
+            <span class="text-subtitle-1 font-weight-bold">{{
+              cartStore.subTotal
+            }}</span>
+          </div>
+        </tbody>
+      </v-table>
       <v-btn
         id="btn"
         v-ripple
@@ -74,7 +89,7 @@ localStorageStore.getUserId();
 cartStore.getCartItems(localStorageStore.userId);
 const userId = ref(localStorageStore.userId);
 const checkOutBtnClass = ref(
-  "v-btn v-btn--block  rounded-0  pa-6 bg-green-darken-3 rounded "
+  "v-btn v-btn--block  rounded-0  pa-6 bg-blue-darken-2 rounded "
 );
 const loading = ref(false);
 
@@ -106,76 +121,81 @@ const checkOut = async () => {
   margin: 0;
 }
 
-/* .cont {
+.cont {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100dvh;
-} */
-
-.center {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.7rem;
-  width: 100%;
-  max-width: 600px;
-  padding: 1rem;
+  margin-top: 4rem;
 }
-
-/* .cartCont {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 100%;
-} */
-
-.cartItem {
+.cart-items {
   position: relative;
   display: flex;
-  flex-direction: row;
-  column-gap: 1rem;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #ccc;
+  flex-direction: column;
+  row-gap: 1rem;
+  justify-content: center;
   width: 100%;
-  padding: 0.4rem;
-  border-radius: 5px;
-  background-color: #c9c5c5;
+  max-width: 500px;
+  padding: 0.5rem;
+  /* max-width: 400px; */
 }
 
-.custom-border {
-  border: 1px solid #b0afaf;
+.cart-item {
+  position: relative;
+  display: flex;
+  padding: 0.5rem;
+  background: #fff;
+  border-radius: 10px;
 }
-/* .image {
-  width: 100%;
-  overflow: hidden;
-} */
 
-/* .image img {
+.image {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 35%;
+  aspect-ratio: 1/1;
+}
+
+.image img {
   width: 100%;
-  object-fit: contain; 
-} */
+  object-fit: contain;
+}
 
 .desc {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  /* flex-direction: column; */
+  justify-content: end;
   align-items: center;
-  text-align: center;
+  width: 100%;
+  /* flex-basis: 300px; */
+}
+
+.body {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  column-gap: 1rem;
+  width: 100%;
+  flex-basis: 500px;
+}
+
+.link {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  align-self: end;
+}
+
+.link a {
+  color: blue;
 }
 
 .delBtn {
   position: absolute;
-  top: 0.2rem;
-  right: 0;
+  top: 0.5rem;
+  right: 0.5rem;
   transition: 0.5s;
 }
 
@@ -185,5 +205,50 @@ const checkOut = async () => {
   padding-right: 3px;
   transform: scale(1.2);
   transition: 0.2s;
+}
+
+.summary-cont {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.summary {
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .cont {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 4rem;
+  }
+
+  .cart-items {
+    width: 50%;
+  }
+
+  .summary-cont {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    max-width: 500px;
+  }
+
+  .summary {
+    flex-basis: 360px;
+  }
 }
 </style>

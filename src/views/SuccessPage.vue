@@ -7,7 +7,20 @@
       width="100%"
       class="pa-4 text-center mx-auto mt-10"
     >
-      <span class="material-symbols-outlined"> check_circle </span>
+      <svg
+        style="width: 20%; height: 30%"
+        class="text-success"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm13.7-1.3a1 1 0 0 0-1.4-1.4L11 12.6l-1.8-1.8a1 1 0 0 0-1.4 1.4l2.5 2.5c.4.4 1 .4 1.4 0l4-4Z"
+          clip-rule="evenodd"
+        />
+      </svg>
 
       <h2 class="text-h5 mb-6">Payment Successfull</h2>
 
@@ -41,10 +54,38 @@
 </template>
 
 <script setup>
+import axios from "axios";
+import { useLocalStorageStore } from "@/store/localStorage";
+import { onMounted, ref } from "vue";
+import { useCartStore } from "../store/cart";
+import { endpoint } from "../constant/endpoint";
+
+const localStorageStore = useLocalStorageStore();
+const userId = ref(localStorageStore.userId);
+const cartStore = useCartStore();
+cartStore.getCartItems(userId.value);
+
+const clear_cart_itmes = async () => {
+  try {
+    const res = await axios.delete(`${endpoint}/api/clear_cart_items`, {
+      params: { userId: userId.value },
+    });
+
+    if (res.status === 200) {
+      console.log(res.data);
+    }
+  } catch (err) {
+    console.error("Error clearing out cart items:", err.message);
+  }
+};
+
+onMounted(() => {
+  clear_cart_itmes();
+});
 </script>
 
 <style scoped>
 .cont {
-  height: 60dvh;
+  height: 100dvh;
 }
 </style>

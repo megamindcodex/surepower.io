@@ -63,7 +63,6 @@ import { endpoint } from "../constant/endpoint";
 const localStorageStore = useLocalStorageStore();
 const userId = ref(localStorageStore.userId);
 const cartStore = useCartStore();
-cartStore.getCartItems(userId.value);
 
 const clear_cart_itmes = async () => {
   try {
@@ -73,6 +72,7 @@ const clear_cart_itmes = async () => {
 
     if (res.status === 200) {
       console.log(res.data);
+      cartStore.getCartItems(userId.value);
     }
   } catch (err) {
     console.error("Error clearing out cart items:", err.message);

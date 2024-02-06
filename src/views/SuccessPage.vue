@@ -39,15 +39,17 @@
       <v-divider class="mb-4"></v-divider>
 
       <div class="text-end">
-        <v-btn
-          class="text-none"
-          color="success"
-          rounded
-          variant="flat"
-          width="90"
-        >
-          Done
-        </v-btn>
+        <RouterLink to="/products" class="text-black">
+          <v-btn
+            class="text-none"
+            rounded
+            variant="outlined"
+            color=""
+            width="100"
+          >
+            Shop more
+          </v-btn>
+        </RouterLink>
       </div>
     </v-sheet>
   </v-container>

@@ -10,13 +10,13 @@
     <Logo />
     <div class="nav mx-8" v-if="display">
       <span
-        :class="{ active: isRouterActive('home') }"
+        :class="{ active: activeRoute('home') }"
         class="nav-item pa-4 text-decoration-none"
         @click="navigateTo('home')"
         >Home
       </span>
       <span
-        :class="{ active: isRouterActive('products') }"
+        :class="{ active: activeRoute('products') }"
         class="nav-item pa-4 text-decoration-none"
         @click="navigateTo('products')"
         >Shop</span
@@ -24,7 +24,7 @@
     </div>
     <div class="cartCont d-flex justify-end align-center mr-4">
       <span
-        :class="{ active: isRouterActive('cart') }"
+        :class="{ active: activeRoute('cart') }"
         class="nav-item mx-2 pt-4"
         @click="navigateTo('cart')"
         v-if="isLoggedIn"
@@ -42,13 +42,13 @@
       </span>
       <span
         class="nav-item mx-2 pt-4 account-circle"
-        :class="{ active: isRouterActive('userProfile') }"
+        :class="{ active: activeRoute('userProfile') }"
         @click="navigateTo('userProfile')"
         v-if="isLoggedIn"
         ><span class="material-symbols-outlined">account_circle</span></span
       >
       <span
-        :class="{ active: isRouterActive('login') }"
+        :class="{ active: activeRoute('login') }"
         class="nav-item mx2 pa-4"
         @click="navigateTo('login')"
         v-if="!isLoggedIn"
@@ -57,7 +57,8 @@
       </span>
     </div>
   </div>
-  <v-navigation-drawer v-model="drawer" location="top" temporary class="drawer">
+
+  <v-navigation-drawer v-model="drawer" temporary class="drawer">
     <div class="close">
       <span class="material-symbols-outlined pa-2" @click="drawer = !drawer">
         close
@@ -68,19 +69,21 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { onBeforeMount, onMounted, ref, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCartStore } from "../store/cart";
 import { useLocalStorageStore } from "../store/localStorage";
 import Logo from "./Logo.vue";
+import { endpoint } from "@/constant/endpoint";
 import Dropdownpanel from "./Dropdownpanel.vue";
+// import CategoriesNavs from "./CategoriesNavs.vue";
 
 const cartStore = useCartStore();
 const localStorageStore = useLocalStorageStore();
 localStorageStore.getUserId();
 const isLoggedIn = ref(false);
 
-const currentRoute = ref(null);
 const route = useRoute();
 const router = useRouter();
 
@@ -88,12 +91,29 @@ const display = ref(true);
 const drawer = ref(false);
 const isSticky = ref(false);
 
-const isRouterActive = (routeName) => {
+const categories = ref(null);
+const message = ref(null);
+
+const getCategories = async () => {
+  try {
+    const res = await axios.get(`${endpoint}/api/deployedCategories`);
+
+    if (res.status === 200) {
+      categories.value = res.data;
+      // console.log(res.data);
+    }
+  } catch (err) {
+    // message.value = res.data;
+    console.log("Error getting categories", err, err.message);
+  }
+};
+
+const currentRoute = ref(null);
+const activeRoute = (routeName) => {
   return currentRoute.value === routeName;
 };
 
 const navigateTo = (routeName) => {
-  // scrollToSection(routeName);
   router.push({ name: routeName });
 };
 
@@ -113,10 +133,12 @@ watchEffect(() => {
 const handleScroll = () => {
   // Adjust the threshold value based on when you want the navbar to become sticky
   isSticky.value = window.scrollY < 300;
+  // console.log(isSticky.value);
 };
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  getCategories();
 });
 
 onBeforeMount(() => {

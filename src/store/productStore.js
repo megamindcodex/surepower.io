@@ -12,10 +12,12 @@ export const useProductsStore = defineStore("productStore", {
     ProductLength: (state) => state.products.length,
   },
   actions: {
-    async getAllProducts() {
+    async getAllProducts(categoryName) {
       try {
         this.loading = true;
-        const res = await axios.get(`${endpoint}/api/productsDeployed`);
+        const res = await axios.get(`${endpoint}/api/productsDeployed`, {
+          params: { categoryName: categoryName },
+        });
         if (res.status === 200) {
           const data = res.data;
           this.products = data;

@@ -2,6 +2,7 @@
   <v-app class="bg-base">
     <div class="mb-16">
       <NavBar />
+      <CategoriesNavs />
       <RouterView />
     </div>
     <Footer />
@@ -11,6 +12,17 @@
 <script setup>
 import Footer from "./components/Footer.vue";
 import NavBar from "./components/NavBar.vue";
+import CategoriesNavs from "./components/CategoriesNavs.vue";
+import { useCategoryStore } from "./store/categoryStore";
+import { onMounted, ref } from "vue";
+
+const key = ref(0);
+const categoryStore = useCategoryStore();
+
+onMounted(() => {
+  key.value++;
+  categoryStore.getCategories();
+});
 </script>
 
 

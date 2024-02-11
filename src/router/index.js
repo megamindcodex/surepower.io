@@ -8,6 +8,7 @@ import LoginPage from "../views/Login.vue";
 import UserProfile from "../views/UserProfile.vue";
 import Cart from "../views/Cart.vue";
 import SuccessPage from "../views/SuccessPage.vue";
+import Category from "../views/Category.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +52,11 @@ const router = createRouter({
       path: "/payment-successfull",
       name: "successPage",
       component: SuccessPage,
+    },
+    {
+      path: "/category/:name",
+      name: "category",
+      component: Category,
     },
   ],
 

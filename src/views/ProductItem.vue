@@ -9,14 +9,23 @@
       </div>
       <div class="desc mt-10">
         <div class="body">
+          <small> Brand:{{ product.brand }}</small>
           <h3>{{ product.name }}</h3>
+          <v-card-subtitle>{{ product.category }}</v-card-subtitle>
           <p>${{ product.price }} {{ product.quantity }}</p>
           <p class="discription">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium
-            nobis dolorum laborum iste quis aut. Sunt voluptatum cum, nesciunt
-            deserunt explicabo soluta dolor consectetur est ab voluptas impedit
-            esse numquam!
+            {{ product.description }}
           </p>
+          <div class="tags d-flex w-100 align-center mt-4">
+            <v-chip
+              size="x-small"
+              class="tag bg-info"
+              v-for="tag in product.tags"
+              :key="tag"
+            >
+              <span>#{{ tag }}</span>
+            </v-chip>
+          </div>
         </div>
         <div class="action">
           <div class="addToCartBtn" v-if="!isItemInCart">
@@ -92,7 +101,7 @@ const addToCartBtnClass = ref(
 );
 const productQuantity = ref(1);
 const isLoading = ref(false);
-console.log(productId.value);
+// console.log(productId.value);
 
 const getProductItem = async () => {
   try {

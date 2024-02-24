@@ -1,11 +1,10 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import { ref } from "vue";
 import { endpoint } from "../constant/endpoint";
 
 export const useCartStore = defineStore("cartStore", {
   state: () => ({
-    cartItems: ref([]),
+    cartItems: [],
   }),
   getters: {
     cartLength: (state) => state.cartItems.length,

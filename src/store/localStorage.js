@@ -3,8 +3,8 @@ import { ref } from "vue";
 
 export const useLocalStorageStore = defineStore("localStorageStore", {
   state: () => ({
-    userId: ref(null),
-    isLoggedIn: ref(false)
+    userId: null,
+    isLoggedIn: false,
   }),
   actions: {
     getUserId() {

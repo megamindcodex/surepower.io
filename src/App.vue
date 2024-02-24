@@ -1,8 +1,21 @@
 <template>
   <v-app class="bg-base">
     <div class="mb-16">
-      <NavBar />
-      <CategoriesNavs />
+      <div class="head py-2 px-0" :class="{ 'sticky-header': isSticky }">
+        <NavBar :showDrawer="showDrawer" />
+        <CategoriesNavs />
+      </div>
+      <v-navigation-drawer v-model="drawer" temporary class="drawer">
+        <div class="close">
+          <span
+            class="material-symbols-outlined pa-2"
+            @click="drawer = !drawer"
+          >
+            close
+          </span>
+        </div>
+        <Dropdownpanel />
+      </v-navigation-drawer>
       <RouterView />
     </div>
     <Footer />
@@ -14,14 +27,39 @@ import Footer from "./components/Footer.vue";
 import NavBar from "./components/NavBar.vue";
 import CategoriesNavs from "./components/CategoriesNavs.vue";
 import { useCategoryStore } from "./store/categoryStore";
-import { onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
+import Dropdownpanel from "./components/Dropdownpanel.vue";
 
 const key = ref(0);
 const categoryStore = useCategoryStore();
+const isSticky = ref(false);
+const drawer = ref(true);
 
+const showDrawer = () => {
+  drawer.value = !drawer.value;
+  console.log(drawer.value);
+};
+
+const handleScroll = () => {
+  // Adjust the threshold value based on when you want the navbar to become sticky
+  isSticky.value = window.scrollY > 170;
+  // console.log(isSticky.value);
+};
+
+// if (router.currentRoute.value.name === "userProfile") {
+//   isNotUserProfile.value = false;
+// }
+
+// getRouteName();
 onMounted(() => {
   key.value++;
   categoryStore.getCategories();
+  window.addEventListener("scroll", handleScroll);
+  categoryStore.getCategories();
+});
+
+onBeforeMount(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -36,6 +74,14 @@ onMounted(() => {
   background-color: #f7f9f9;
 }
 
+.head {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #00000091; */
+}
 .logo {
   display: block;
   margin: 0 auto 2rem;
@@ -78,7 +124,22 @@ nav a:first-of-type {
   display: flex;
   justify-content: center;
 }
-.cart-panel {
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.close {
+  position: sticky;
+  top: 0px;
+  z-index: 200;
+  width: 20px;
+}
+
+/* .cart-panel {
   position: absolute;
   top: 100%;
   right: 15%;
@@ -86,11 +147,11 @@ nav a:first-of-type {
   backdrop-filter: blur(3px);
   background-color: rgba(0, 0, 0, 0.5);
   transition: 0.5s;
-}
-.cart-panel-btn {
+} */
+/* .cart-panel-btn {
   margin-left: 4em;
   cursor: pointer;
-}
+} */
 
 .cart-icon {
   font-size: 1.5rem;
@@ -106,4 +167,20 @@ nav a:first-of-type {
 /* .iconLinks a {
   cursor: pointer;
 } */
+
+.sticky-header {
+  position: sticky;
+  top: -5rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-content: center;
+  z-index: 999;
+  transition: ease 0.3s;
+  color: #ffff;
+  /* border-bottom: 2px solid #c2c2c2; */
+  background-color: #00000091;
+
+  transform: translateY(4rem);
+}
 </style>

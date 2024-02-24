@@ -8,22 +8,25 @@
         Loading....
       </v-progress-circular>
     </div> -->
-    <div class="productCont" v-if="products">
+    <div class="productCont" v-if="productStore.productsByCategory">
       <RouterLink
         :to="'/productitem/' + product._id"
         class="product"
-        v-for="product in products"
+        v-for="product in productStore.productsByCategory"
         :key="product._id"
       >
         <div class="product-card">
           <div class="image bg-white">
             <v-img :src="product.productImageURL" :alt="product.name" />
           </div>
-          <div class="desc mt-4 pa-4">
-            <v-card-title class="text-overline font-weight-bold pa-0">{{
-              product.name
-            }}</v-card-title>
-            <v-card-title class="text-subtitle-1 pa-0"
+          <div class="desc mt-2 px-2">
+            <v-card-subtitle class="font-weight-bold pa-0">
+              {{ product.brand }}
+            </v-card-subtitle>
+            <v-card-title class="text-overline font-weight-bold pa-0">
+              {{ product.name }}
+            </v-card-title>
+            <v-card-title class="text-subtitle-1 pa-0 font-weight-bold"
               >${{ product.price }}</v-card-title
             >
 
@@ -51,35 +54,40 @@ import axios from "axios";
 import { onMounted, ref, watch, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { endpoint } from "../constant/endpoint";
+import { useProductsStore } from "@/store/productStore";
 
 // const seeProductBtnClass = ref(
 //   "v-btn v-btn--block v-btn--variant-outlined pa-4"
 // );
+const productStore = useProductsStore();
 
-const products = ref(null);
+// const products = ref(null);
 const route = useRoute();
 const categoryName = ref(null);
 
-const getPoductsByCategory = async (categoryName) => {
-  try {
-    const res = await axios.get(`${endpoint}/api/productsByCategory`, {
-      params: { categoryName: categoryName },
-    });
+// const getPoductsByCategory = async (categoryName) => {
+//   try {
+//     const res = await axios.get(`${endpoint}/api/productsByCategory`, {
+//       params: { categoryName: categoryName },
+//     });
 
-    if (res.status === 200) {
-      products.value = res.data;
-      // console.log("products By category fetched:", products.value);
-    }
-  } catch (err) {
-    console.log("Error getting poducts by category", err, err.message);
-  }
+//     if (res.status === 200) {
+//       products.value = res.data;
+//       // console.log("products By category fetched:", products.value);
+//     }
+//   } catch (err) {
+//     console.log("Error getting poducts by category", err, err.message);
+//   }
+// };
+
+const updateCategoryName = (newCategoryName) => {
+  categoryName.value = newCategoryName;
 };
-
 onMounted(() => {
   watchEffect(() => {
     // Update the categoryName whenever the route parameter changes
-    categoryName.value = route.params.name;
-    getPoductsByCategory(categoryName.value);
+    updateCategoryName(route.params.name);
+    productStore.getPoductsByCategory(categoryName.value);
   });
 });
 </script>
@@ -94,8 +102,8 @@ onMounted(() => {
 
 .productCont {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 5px;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -119,9 +127,10 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   border: 2px solid #c2c2c2;
-  background-color: #e8e9eb;
+  background-color: #fff;
+  /* background-color: #e8e9eb; */
   /* background-color: #f39098; */
 }
 
@@ -131,7 +140,7 @@ onMounted(() => {
   align-items: center;
   width: 100%;
   overflow: hidden;
-  aspect-ratio: 9/6;
+  aspect-ratio: 1/1;
   /* object-fit: contain; */
   border-radius: 4px 4px 0 0;
 }
@@ -173,5 +182,30 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .productCont {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    flex-grow: 1;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .productCont {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    flex-grow: 1;
+  }
 }
 </style>

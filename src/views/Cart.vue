@@ -19,10 +19,12 @@
           <img :src="product.productImageURL" :alt="product.name" />
         </div>
         <div class="desc">
-          <div class="body">
-            <span class="text-subtitle-3">{{ product.name }}</span>
-            <p>${{ product.price }}</p>
-            <p class="font-weight-bold">{{ product.quantity }}</p>
+          <div class="body d-flex">
+            <span class="pa-0 pt-2">
+              {{ product.name }}
+            </span>
+            <p class="pt-2">${{ product.price }}</p>
+            <p class="font-weight-bold pt-2">{{ product.quantity }}</p>
           </div>
           <div class="link">
             <RouterLink :to="'/productitem/' + product._id">
@@ -175,16 +177,20 @@ const checkOut = async () => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* flex-basis: 300px; */
+  flex-basis: 300px;
 }
 
 .body {
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
+  /* justify-content: left; */
+  align-items: center;
   column-gap: 1rem;
   width: 100%;
   /* flex-basis: 500px; */
+}
+
+.product-name {
+  font-size: 12px;
 }
 
 .link {

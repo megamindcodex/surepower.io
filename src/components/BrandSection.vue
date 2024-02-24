@@ -1,45 +1,31 @@
+
+
 <template>
   <v-container
     class="container d-flex justify-center align-center"
     max-width="700px"
   >
-    <div class="loading" v-if="productStore.loading">
-      <v-progress-circular indeterminate color="#00796B" :size="200">
-        Loading....
-      </v-progress-circular>
-    </div>
-    <div class="productCont" v-if="productStore.products">
-      <RouterLink
-        :to="'/productitem/' + product._id"
+    <div class="productCont" v-if="productStore.productsByBrand">
+      <div
         class="product"
-        v-for="product in productStore.products"
+        v-for="product in productStore.productsByBrand"
         :key="product._id"
+        @click="navigateTo(product._id)"
       >
         <div class="product-card">
           <div class="image bg-white">
             <v-img :src="product.productImageURL" :alt="product.name" />
           </div>
-          <div class="desc mt-2 px-2">
-            <v-card-subtitle class="font-weight-bold pa-0">
-              {{ product.brand }}
-            </v-card-subtitle>
+          <div class="desc mt-4 pa-4">
             <v-card-title class="text-overline font-weight-bold pa-0">
               {{ product.name }}
             </v-card-title>
             <v-card-title class="text-subtitle-1 pa-0">
               ${{ product.price }}
             </v-card-title>
-            <!-- <div class="card-action">
-              <RouterLink
-                :to="'/productitem/' + product._id"
-                :class="seeProductBtnClass"
-                v-ripple
-                >See product</RouterLink
-              >
-            </div> -->
           </div>
         </div>
-      </RouterLink>
+      </div>
       <!-- <v-responsive width="100%"></v-responsive> -->
     </div>
     <div class="productCont" v-else>
@@ -47,30 +33,57 @@
     </div>
   </v-container>
 </template>
+  
+  <script setup>
+// import axios from "axios";
+// import { endpoint } from "../constant/endpoint";
+import { defineProps, onMounted, ref, watch, watchEffect } from "vue";
+import { useProductsStore } from "@/store/productStore";
+import { useRoute, useRouter } from "vue-router";
 
-<script setup>
-// import Landingsection from "../components/Landsection.vue";
-import { ref } from "vue";
-import { useProductsStore } from "../store/productStore";
+const route = useRoute();
+const router = useRouter();
 
-const seeProductBtnClass = ref(
-  "v-btn v-btn--block v-btn--variant-outlined pa-4"
-);
+// const productId = ref(route.params.id);
 
 const productStore = useProductsStore();
+const { product, checkItemInCart } = defineProps([
+  "product",
+  "checkItemInCart",
+]);
 
-productStore.getAllProducts();
-// console.log(productStore.products);
+const navigateTo = (routeName) => {
+  try {
+    router.push({ name: "productItem", params: { id: routeName } });
+    checkItemInCart();
+  } catch (error) {
+    console.error("Error navigating to route:", error);
+  }
+};
+
+// watch(
+//   () => route.params.id,
+//   (newId, oldId) => {
+//     // This function will be executed whenever the value of route.params.id changes
+//     console.log('Route parameter "id" changed from', oldId, "to", newId);
+
+//     // Call your function here
+//     getProductItem(route.params.id);
+//   }
+// );
+
+// watchEffect(() => {
+//   getProductItem(route.params.id);
+//   //   console.log(product);
+// });
+
+onMounted(() => {
+  productStore.getAllProducts();
+  // console.log(productStore.products);
+});
 </script>
-
-<style scoped>
-/* .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-} */
-
+  
+  <style scoped>
 .productCont {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -81,6 +94,10 @@ productStore.getAllProducts();
   max-width: 1228px;
   flex-grow: 1;
 }
+
+/* .productCont::-webkit-scrollbar {
+    display: none;
+  } */
 
 .product {
   display: flex;
@@ -112,19 +129,20 @@ productStore.getAllProducts();
   width: 100%;
   overflow: hidden;
   aspect-ratio: 1/1;
-  /* object-fit: contain; */
+  object-fit: contain;
   border-radius: 4px 4px 0 0;
 }
 
 .image img {
   width: 100%;
-  /* object-fit: contain; */
+  max-width: 200px;
+  object-fit: contain;
 }
 
 .desc {
   display: flex;
   flex-direction: column;
-  /* padding: 10px; */
+  padding: 10px;
   /* box-sizing: border-box; */
   /* max-width: auto-fit; */
 }
@@ -138,13 +156,13 @@ productStore.getAllProducts();
 }
 
 /* .card-action {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-top: 1rem;
-  border-radius: 10px;
-} */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    border-radius: 10px;
+  } */
 
 .loading {
   position: absolute;
@@ -154,37 +172,6 @@ productStore.getAllProducts();
   align-items: center;
   width: 100%;
 }
-
-/* .addToCartBtn a {
-  text-decoration: none;
-  color: black;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  width: 95%;
-  padding: 0.5rem 1rem;
-  border: 1.5px solid rgb(5, 119, 72);
-  background: transparent;
-  cursor: pointer;
-  transition: 0.3s;
-} */
-
-/* 
-.addToCartBtn a:hover {
-  color: white;
-  transition: 0.3s;
-  background-color: green;
-} */
-
-/* .cartIcon {
-  display: flex;
-  background-color: red;
-}
-
-.cartIcon svg {
-  width: 24px;
-  height: auto;
-} */
 
 @media screen and (min-width: 600px) {
   .productCont {

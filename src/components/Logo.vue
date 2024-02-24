@@ -1,7 +1,7 @@
 <template>
-  <RouterLink to="/" class="cont">
+  <RouterLink to="/" class="cont d-flex justify-center">
     <div class="image">
-      <v-img class="v-imag w-100" alt="markTio, logo" :src="logoURL"></v-img>
+      <v-img class="v-image" alt="markTio, logo" :src="logoURL"></v-img>
     </div>
   </RouterLink>
 </template>
@@ -16,18 +16,21 @@ import logoURL from "../assets/logo.png";
   display: flex;
   justify-items: center;
   align-self: center;
-  width: 100px;
+  width: 50px;
   align-self: center;
-  aspect-ratio: 16/9;
 }
 
 .image {
   position: relative;
   display: flex;
-  flex-grow: 1;
   justify-content: center;
   align-items: center;
-  width: 80px;
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+
+.v-img {
+  width: 100%;
 }
 
 @media screen and (min-width: 600px) {
@@ -35,9 +38,22 @@ import logoURL from "../assets/logo.png";
     display: flex;
     justify-items: center;
     align-items: center;
-    width: 100px;
-    align-self: center;
-    aspect-ratio: 16/9;
+    width: 110px;
+    /* margin-left: ; */
+  }
+
+  .image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    width: 50%;
+  }
+
+  .v-img {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

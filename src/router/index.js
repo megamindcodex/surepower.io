@@ -25,7 +25,7 @@ const router = createRouter({
     },
     {
       path: "/productitem/:id",
-      name: "ProductItem",
+      name: "productItem",
       component: ProductItem,
     },
     {
@@ -58,6 +58,11 @@ const router = createRouter({
       name: "category",
       component: Category,
     },
+    {
+      path: "/category/:name",
+      name: "category",
+      component: Category,
+    },
   ],
 
   scrollBehavior(to, from, savedPosition) {
@@ -65,7 +70,8 @@ const router = createRouter({
       // return desired position
       return savedPosition;
     } else {
-      return { top: 0, behavior: "smooth" };
+      return { top: 0 };
+      // return { top: 0, behavior: "smooth" };
     }
   },
 });

@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import { ref } from "vue";
 import { endpoint } from "../constant/endpoint";
 
 export const useCategoryStore = defineStore("categoryStore", {
   state: () => ({
-    categories: ref([]),
-    loading: ref([]),
+    categories: [],
+    loading: null,
+    products: [],
+    categoryName: null,
   }),
   getters: {
     categoryLength: (state) => state.categories.length,
@@ -18,7 +19,7 @@ export const useCategoryStore = defineStore("categoryStore", {
 
         if (res.status === 200) {
           this.categories = res.data;
-          // console.log(res.data);
+          console.log(res.data);
         }
       } catch (err) {
         // message.value = res.data;

@@ -1,11 +1,8 @@
 <template>
-  <div :class="{ 'sticky-header': isSticky }" class="header pa-1">
-    <div class="menu">
-      <span
-        class="material-symbols-outlined pa-2"
-        @click.stop="drawer = !drawer"
-        >menu</span
-      >
+  <div :class="{ 'sticky-header': isSticky }" class="header">
+    <div class="menu ml-2">
+      <!-- <span class="material-symbols-outlined" @click.stop="drawer = !drawer" -->
+      <span class="material-symbols-outlined" @click="showDrawer()">menu</span>
     </div>
     <Logo />
     <div class="nav mx-8" v-if="display">
@@ -22,7 +19,7 @@
         >Shop</span
       >
     </div>
-    <div class="cartCont d-flex justify-end align-center mr-4">
+    <div class="cartCont d-flex justify-end align-center mr-2">
       <span
         :class="{ active: activeRoute('cart') }"
         class="nav-item mx-2 pt-4"
@@ -57,20 +54,18 @@
       </span>
     </div>
   </div>
-
-  <v-navigation-drawer v-model="drawer" temporary class="drawer">
-    <div class="close">
-      <span class="material-symbols-outlined pa-2" @click="drawer = !drawer">
-        close
-      </span>
-    </div>
-    <Dropdownpanel />
-  </v-navigation-drawer>
 </template>
 
 <script setup>
 import axios from "axios";
-import { onBeforeMount, onMounted, ref, watch, watchEffect } from "vue";
+import {
+  onBeforeMount,
+  onMounted,
+  ref,
+  watch,
+  watchEffect,
+  defineProps,
+} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCartStore } from "../store/cart";
 import { useLocalStorageStore } from "../store/localStorage";
@@ -88,7 +83,9 @@ const route = useRoute();
 const router = useRouter();
 
 const display = ref(true);
-const drawer = ref(false);
+const { showDrawer } = defineProps(["showDrawer"]);
+// const drawer = ref(false);
+console.log(showDrawer);
 const isSticky = ref(false);
 
 const categories = ref(null);
@@ -130,20 +127,20 @@ watchEffect(() => {
   cartStore.getCartItems(localStorageStore.userId);
 });
 
-const handleScroll = () => {
-  // Adjust the threshold value based on when you want the navbar to become sticky
-  isSticky.value = window.scrollY < 300;
-  // console.log(isSticky.value);
-};
+// const handleScroll = () => {
+//   // Adjust the threshold value based on when you want the navbar to become sticky
+//   isSticky.value = window.scrollY > 170;
+//   // console.log(isSticky.value);
+// };
 
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-  getCategories();
-});
+// onMounted(() => {
+//   window.addEventListener("scroll", handleScroll);
+//   getCategories();
+// });
 
-onBeforeMount(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+// onBeforeMount(() => {
+//   window.removeEventListener("scroll", handleScroll);
+// });
 </script>
 
 <style scoped>
@@ -160,21 +157,22 @@ onBeforeMount(() => {
   justify-content: space-between;
   align-content: center;
   z-index: 999;
-  border-bottom: 1px solid #c2c2c2;
-  transition: ease 1s;
+  /* border-bottom: 1px solid #c2c2c2; */
+  /* transition: ease 0.2s; */
 }
 
 .sticky-header {
   position: sticky;
-  top: 0;
+  top: -1rem;
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-content: center;
   z-index: 999;
-  transition: ease 1s;
+  transition: ease 0.2s;
   /* border-bottom: 2px solid #c2c2c2; */
-  background-color: #00000013;
+  background-color: #00000091;
+  transform: translateY(3rem);
 }
 
 /* .is-top {
@@ -261,6 +259,7 @@ onBeforeMount(() => {
 .menu span {
   font-size: 2rem;
   cursor: pointer;
+  /* color: #fff; */
 }
 
 .badge {
@@ -269,6 +268,7 @@ onBeforeMount(() => {
 
 .cart-icon {
   position: relative;
+  /* color: white; */
 }
 
 @media screen and (min-width: 600px) {
@@ -302,5 +302,21 @@ onBeforeMount(() => {
   /* .login-link {
     display: none;
   } */
+  .sticky-header {
+    position: sticky;
+    top: -2rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+    z-index: 999;
+    transition: ease 0.2s;
+    border-bottom: 2px solid #c2c2c2;
+    /* background-color: #00000013; */
+    color: white;
+    background-color: #00000091;
+    /* transform: translateY(1rem); */
+    backdrop-filter: blur(2px);
+  }
 }
 </style>

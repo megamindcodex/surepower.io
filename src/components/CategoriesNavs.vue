@@ -165,12 +165,12 @@ const activeRoute = (routeName) => {
   width: fit-content;
   overflow-x: scroll;
   border-radius: 20px;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: black gray;
 }
 
 .chip {
-  background-color: rgba(0, 0, 0, 0.464);
+  /* background-color: rgba(0, 0, 0, 0.464); */
   border-radius: 20px;
   white-space: nowrap;
   font-size: 13px;

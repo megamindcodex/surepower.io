@@ -39,9 +39,10 @@
       <v-table v-if="cartStore.cartLength" class="summary">
         <thead>
           <tr>
-            <th class="text-left text-h6">Name</th>
-            <th class="text-left text-h6">Price</th>
-            <th class="text-left text-h6">Quanity</th>
+            <th class="text-left">Name</th>
+            <th class="text-left">Price</th>
+            <th class="text-left">Quanity</th>
+            <th class="text-left">Subtotal</th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>{{ product.quantity }}</td>
+            <td>{{ product.subTotal }}</td>
           </tr>
           <div class="d-flex flex-column pa-4 mt-8">
             <span class="text-h6 font-weight-bold">Total:</span>
@@ -103,7 +105,7 @@ const loading = ref(false);
 const checkOut = async () => {
   try {
     loading.value = true;
-    const res = await axios.post(`${endpoint}/api/create-checkout-session`, {
+    const res = await axios.post(`${endpoint}/api/crypto_invoice_payment`, {
       userId: userId.value,
     });
 

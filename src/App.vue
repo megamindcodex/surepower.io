@@ -1,7 +1,7 @@
 <template>
   <v-app class="bg-base">
     <div class="mb-16">
-      <div class="head py-2 px-0" :class="{ 'sticky-header': isSticky }">
+      <div class="head py-2 px-0 ga-1" :class="{ 'sticky-header': isSticky }">
         <NavBar :showDrawer="showDrawer" />
         <CategoriesNavs />
       </div>

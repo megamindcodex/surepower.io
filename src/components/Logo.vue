@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import logoURL from "../assets/logo.png";
+import logoURL from "../assets/powerhub-logo.png";
 </script>
 
 <style scoped>

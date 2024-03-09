@@ -3,11 +3,11 @@
     class="container d-flex justify-center align-center"
     max-width="700px"
   >
-    <div class="loading" v-if="productStore.loading">
+    <!-- <div class="loading" v-if="productStore.loading">
       <v-progress-circular indeterminate color="#00796B" :size="200">
         Loading....
       </v-progress-circular>
-    </div>
+    </div> -->
     <div class="productCont" v-if="productStore.products">
       <RouterLink
         :to="'/productitem/' + product._id"
@@ -29,14 +29,6 @@
             <v-card-title class="text-subtitle-1 pa-0">
               ${{ product.price }}
             </v-card-title>
-            <!-- <div class="card-action">
-              <RouterLink
-                :to="'/productitem/' + product._id"
-                :class="seeProductBtnClass"
-                v-ripple
-                >See product</RouterLink
-              >
-            </div> -->
           </div>
         </div>
       </RouterLink>
@@ -124,9 +116,6 @@ productStore.getAllProducts();
 .desc {
   display: flex;
   flex-direction: column;
-  /* padding: 10px; */
-  /* box-sizing: border-box; */
-  /* max-width: auto-fit; */
 }
 
 .productCont h3 {

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import { endpoint } from "../constant/endpoint";
+import { endpoint } from "@/constant/endpoint";
 
 export const useCartStore = defineStore("cartStore", {
   state: () => ({

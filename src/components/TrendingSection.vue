@@ -26,7 +26,7 @@ onMounted(() => {
 
 <template>
   <div class="cont w-100 pa-3 mt-8">
-    <h1 class="text-red">Trending</h1>
+    <h3 class="d-flex align-left w-100 pa-2">Trending</h3>
     <swiper
       :modules="modules"
       :slidesPerView="2"
@@ -89,7 +89,8 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(228, 228, 232);
+  border-top: 1px solid black;
+  /* background-color: rgb(228, 228, 232); */
 }
 .product {
   display: flex;
@@ -98,6 +99,7 @@ onMounted(() => {
   width: 100%;
   text-decoration: none;
   color: #000;
+
   /* color: #01837b; */
 }
 

@@ -62,7 +62,7 @@ export const useProductsStore = defineStore("productStore", {
         this.trendingProducts = this.products.filter((product) =>
           product.tags.includes("trending")
         );
-        console.log;
+        console.log("trending product", this.trendingProducts);
       } catch (err) {
         console.log("Error getting trending products", err, err.message);
       }

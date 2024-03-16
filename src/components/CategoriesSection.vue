@@ -27,7 +27,7 @@ onMounted(() => {
 
 <template>
   <div class="cont w-100 pa-3 mt-8">
-    <h1 class="text-red">Categories</h1>
+    <h3 class="section-title">Categories</h3>
     <swiper
       :slidesPerView="2"
       :space-between="10"
@@ -75,9 +75,9 @@ onMounted(() => {
                 {{ category.description }}
               </v-card-title> -->
             </div>
-            <div class="back-lay">
-              <span>{{ category.name }}</span>
-            </div>
+          </div>
+          <div class="back-lay">
+            <v-card-subtitle class=".span">{{ category.name }}</v-card-subtitle>
           </div>
         </RouterLink>
         <!-- <v-responsive width="100%"></v-responsive> -->
@@ -94,10 +94,12 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: rgb(228, 228, 232);
+  border-top: 1px solid black;
+  /* background-color: rgb(228, 228, 232); */
 }
 .category {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -117,6 +119,13 @@ onMounted(() => {
   border-radius: 5px;
   border: 2px solid #c2c2c2;
   background-color: #ffff;
+}
+
+.section-title {
+  position: relative;
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
 }
 
 .image {
@@ -151,6 +160,8 @@ onMounted(() => {
 }
 
 .swiper {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 1300px;
 }
@@ -166,23 +177,21 @@ onMounted(() => {
 }
 
 .back-lay {
-  position: absolute;
-  top: 0;
   left: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.411);
+  /* background-color: rgba(0, 0, 0, 0.411); */
 }
 
-.back-lay span {
+.back-lay .span {
   position: relative;
   text-align: center;
-  color: white;
+  color: black;
   font-weight: bolder;
-  font-size: 1.5em;
+  font-size: 1rem;
+  padding-top: 0.3rem;
 }
 </style>

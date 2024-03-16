@@ -3,7 +3,7 @@
     <Landsection />
     <CategoriesSection />
     <TrendingSection />
-    <div class=""><strong>Products</strong></div>
+    <h3 class="d-flex align-left w-100 pa-2">Products</h3>
     <Products />
   </div>
 </template>
@@ -16,9 +16,8 @@ import Products from "@/views/Products.vue";
 import { useRouter } from "vue-router";
 import { onMounted, onUnmounted } from "vue";
 
-const scroll_treshold = 800;
-
 const router = useRouter();
+const scroll_treshold = 1000;
 
 const handleScroll = () => {
   if (window.scrollY > scroll_treshold) {

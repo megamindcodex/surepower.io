@@ -67,6 +67,8 @@ const LandImages = [
     <swiper
       v-if="LandImages"
       :centeredSlides="true"
+      :space-between="10"
+      :slidesPerView="2"
       :modules="modules"
       :loop="true"
       :navigation="true"
@@ -96,7 +98,7 @@ const LandImages = [
   max-width: 1000px;
   /* height: 400px; */
   transition: 0.5s;
-  aspect-ratio: 8/4;
+  aspect-ratio: 10/4;
   padding: 5px;
 }
 
@@ -114,7 +116,7 @@ const LandImages = [
   height: 100%;
 }
 .image {
-  width: 100%;
+  width: 700px;
   height: 100%;
   border-radius: 1rem;
 }

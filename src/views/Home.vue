@@ -12,7 +12,7 @@
 import Landsection from "@/components/Landsection.vue";
 import TrendingSection from "@/components/TrendingSection.vue";
 import CategoriesSection from "@/components/CategoriesSection.vue";
-import Products from "@/views/Products.vue";
+import Products from "@/components/productss.vue";
 import { useRouter } from "vue-router";
 import { onMounted, onUnmounted } from "vue";
 
